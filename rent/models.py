@@ -8,7 +8,7 @@ class client(models.Model):
     name = models.CharField(max_length=20)
     surname = models.CharField(max_length=50)
     id_number = models.CharField(max_length=9, null=True)
-    card_number = models.IntegerField(max_length=16, null=True)
+    card_number = models.IntegerField(null=True)
 
 class city(models.Model):
     name = models.CharField(max_length=50)
