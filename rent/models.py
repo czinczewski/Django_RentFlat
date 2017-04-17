@@ -3,18 +3,29 @@ from django.db import models
 from django.utils import timezone
 import datetime
 
-class client(models.Model):
+
+class Client(models.Model):
     nickname = models.CharField(max_length=20, primary_key=True, unique=True)
     name = models.CharField(max_length=20)
     surname = models.CharField(max_length=50)
     id_number = models.CharField(max_length=9, null=True)
     card_number = models.IntegerField(null=True)
 
-class city(models.Model):
+
+class City(models.Model):
     name = models.CharField(max_length=50)
     postcode = models.CharField(max_length=16)
 
-class flat(models.Model):
+    class Meta:
+        verbose_name_plural = 'Cities'
+
+    @property
+    def __str__(self):
+        return self.name
+
+
+class Flat(models.Model):
+    name = models.CharField(max_length=200, unique=True)
     availability = models.BooleanField()
     start_date = models.DateField()
     end_date = models.DateField()
@@ -24,11 +35,15 @@ class flat(models.Model):
     animal = models.BooleanField()
     child = models.BooleanField()
     parking_space = models.NullBooleanField(null=True)
-    city = models.ForeignKey(city)
+    city = models.ForeignKey(City)
 
-class rent(models.Model):
-    flat = models.ForeignKey(flat)
-    nickname = models.ForeignKey(client)
+    def __str__(self):
+        return self.name
+
+
+class Rent(models.Model):
+    flat = models.ForeignKey(Flat)
+    nickname = models.ForeignKey(Client)
     start_rent = models.DateField()
     end_rent = models.DateField()
 
